@@ -1,0 +1,3 @@
+name: MCMetrics
+version: '${project.version}'
+main: me.kicksquare.mcmbungee.MCMBungee
