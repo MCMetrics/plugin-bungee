@@ -40,7 +40,7 @@ public final class MCMBungee extends Plugin {
                 .setReloadSettings(ReloadSettings.MANUALLY)
                 .createConfig();
 
-        //todo fetch tasks and save to config
+        MCMCommand.reloadConfigAndFetchData();
 
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new MCMCommand());
 
