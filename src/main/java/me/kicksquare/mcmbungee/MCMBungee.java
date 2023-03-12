@@ -64,6 +64,7 @@ public final class MCMBungee extends Plugin {
         // every 5 minutes, log "hello world" to console
         getProxy().getScheduler().schedule(this, () -> {
             if (!SetupUtil.shouldRecordPings()) return;
+            if(dataConfig.getInt("ping-interval") == 0) return;
 
             try {
                 System.out.println("uploading player count");
@@ -72,7 +73,7 @@ public final class MCMBungee extends Plugin {
             } catch (Exception e) {
                 e.printStackTrace();
             }
-        }, 0, 5, java.util.concurrent.TimeUnit.MINUTES);
+        }, 0, dataConfig.getInt("ping-interval"), java.util.concurrent.TimeUnit.MINUTES);
     }
 
     public static MCMBungee getPlugin() {
