@@ -2,6 +2,7 @@ package me.kicksquare.mcmbungee.commands;
 
 import me.kicksquare.mcmbungee.MCMBungee;
 import me.kicksquare.mcmbungee.types.TaskList;
+import me.kicksquare.mcmbungee.util.HttpUtil;
 import me.kicksquare.mcmbungee.util.SetupUtil;
 import net.md_5.bungee.api.ChatColor;
 import net.md_5.bungee.api.CommandSender;
@@ -81,6 +82,10 @@ public class MCMCommand extends Command {
                 plugin.getMainConfig().set("server_id", serverId);
                 plugin.getDataConfig().set("setup-complete", true);
                 reloadConfigAndFetchData();
+
+                // set server connected to true
+                HttpUtil.makeAsyncGetRequest("https://dashboard.mcmetrics.net/api/server/setServerIsSetup", HttpUtil.getAuthHeadersFromConfig());
+
                 sender.sendMessage(ChatColor.GREEN + "Successfully configured the plugin!");
                 return;
             }
