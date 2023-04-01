@@ -1,6 +1,7 @@
 package me.kicksquare.mcmbungee;
 
 import io.sentry.Sentry;
+import me.kicksquare.mcmbungee.util.LoggerUtil;
 
 public class SentryExceptionHandler implements Thread.UncaughtExceptionHandler {
     @Override
@@ -14,7 +15,7 @@ public class SentryExceptionHandler implements Thread.UncaughtExceptionHandler {
             }
         }
         if(isFromThisPlugin) {
-            System.out.println("Detected an MCMetrics exception. Uploading to sentry.");
+            LoggerUtil.severe("Detected an MCMetrics exception. Uploading to sentry.");
             Sentry.captureException(e);
         }
     }

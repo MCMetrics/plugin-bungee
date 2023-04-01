@@ -7,6 +7,7 @@ import de.leonhard.storage.internal.settings.ReloadSettings;
 import io.sentry.Sentry;
 import me.kicksquare.mcmbungee.commands.MCMCommand;
 import me.kicksquare.mcmbungee.util.HttpUtil;
+import me.kicksquare.mcmbungee.util.LoggerUtil;
 import me.kicksquare.mcmbungee.util.Metrics;
 import me.kicksquare.mcmbungee.util.SetupUtil;
 import net.md_5.bungee.api.ProxyServer;
@@ -67,7 +68,7 @@ public final class MCMBungee extends Plugin {
             if(dataConfig.getInt("ping-interval") == 0) return;
 
             try {
-                System.out.println("uploading player count");
+                LoggerUtil.debug("Sending playercount ping");
                 final String bodyString = "{\"playercount\": \"" + getProxy().getPlayers().size() + "\"}";
                 HttpUtil.makeAsyncPostRequest("https://dashboard.mcmetrics.net/api/pings/insertPing", bodyString, HttpUtil.getAuthHeadersFromConfig());
             } catch (Exception e) {
