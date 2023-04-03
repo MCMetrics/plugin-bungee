@@ -6,6 +6,7 @@ import de.leonhard.storage.internal.settings.DataType;
 import de.leonhard.storage.internal.settings.ReloadSettings;
 import io.sentry.Sentry;
 import me.kicksquare.mcmbungee.commands.MCMCommand;
+import me.kicksquare.mcmbungee.commands.PaymentCommand;
 import me.kicksquare.mcmbungee.util.HttpUtil;
 import me.kicksquare.mcmbungee.util.LoggerUtil;
 import me.kicksquare.mcmbungee.util.Metrics;
@@ -44,6 +45,7 @@ public final class MCMBungee extends Plugin {
         MCMCommand.reloadConfigAndFetchData();
 
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new MCMCommand());
+        ProxyServer.getInstance().getPluginManager().registerCommand(this, new PaymentCommand());
 
         // enable bstats
         if (mainConfig.getBoolean("enable-bstats")) {
