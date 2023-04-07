@@ -5,6 +5,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import me.kicksquare.mcmbungee.MCMBungee;
 import me.kicksquare.mcmbungee.util.HttpUtil;
+import me.kicksquare.mcmbungee.util.LoggerUtil;
 
 public class TaskList {
     private static MCMBungee plugin = MCMBungee.getPlugin();
@@ -44,7 +45,10 @@ public class TaskList {
                     plugin.getDataConfig().set("record-pings", tasks.recordPings);
                     plugin.getDataConfig().set("ping-interval", tasks.pingInterval);
                 } catch (JsonProcessingException exception) {
-                    exception.printStackTrace();
+                    if (plugin.getMainConfig().getBoolean("debug")) {
+                        LoggerUtil.severe("Error occurred while fetching task list: " + exception.getMessage());
+                        exception.printStackTrace();
+                    }
                 }
             }
         });
