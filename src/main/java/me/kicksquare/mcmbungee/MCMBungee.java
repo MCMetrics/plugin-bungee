@@ -66,17 +66,21 @@ public final class MCMBungee extends Plugin {
 
         // every 5 minutes, log "hello world" to console
         getProxy().getScheduler().schedule(this, () -> {
-            if (!SetupUtil.shouldRecordPings()) return;
-            if(dataConfig.getInt("ping-interval") == 0) return;
-
-            try {
-                LoggerUtil.debug("Sending playercount ping");
-                final String bodyString = "{\"playercount\": \"" + getProxy().getPlayers().size() + "\"}";
-                HttpUtil.makeAsyncPostRequest("https://dashboard.mcmetrics.net/api/pings/insertPing", bodyString, HttpUtil.getAuthHeadersFromConfig());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+            uploadPlayerCount();
         }, 0, dataConfig.getInt("ping-interval"), java.util.concurrent.TimeUnit.MINUTES);
+    }
+
+    public void uploadPlayerCount() {
+        if (!SetupUtil.shouldRecordPings()) return;
+        if(dataConfig.getInt("ping-interval") == 0) return;
+
+        try {
+            LoggerUtil.debug("Sending playercount ping");
+            final String bodyString = "{\"playercount\": \"" + getProxy().getPlayers().size() + "\"}";
+            HttpUtil.makeAsyncPostRequest("https://dashboard.mcmetrics.net/api/pings/insertPing", bodyString, HttpUtil.getAuthHeadersFromConfig());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static MCMBungee getPlugin() {

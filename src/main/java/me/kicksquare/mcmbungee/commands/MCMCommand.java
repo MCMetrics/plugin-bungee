@@ -47,6 +47,7 @@ public class MCMCommand extends Command {
             if (args[0].equalsIgnoreCase("reload")) {
                 reloadConfigAndFetchData().thenAccept((result) -> {
                     if (result) {
+                        plugin.uploadPlayerCount(); // manually force upload player count
                         sender.sendMessage(ChatColor.GREEN + "Successfully reloaded the config!");
                         if (plugin.getMainConfig().getBoolean("enable-sentry")) return; // already enabled
                         sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Optional Sentry Opt-In: Run &9'mcmetrics enablesentry'&7 to enable anonymous error-reporting via Sentry (you can change this later in the config)."));
