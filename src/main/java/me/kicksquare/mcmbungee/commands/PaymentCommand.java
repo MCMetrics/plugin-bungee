@@ -28,18 +28,17 @@ public class PaymentCommand extends Command {
             return;
         }
 
-        // mcmpayment <tebex|craftingstore> <player_uuid> <transaction_id> <amount> <currency> <package_id>
-        if (args.length != 6) {
-            sender.sendMessage("Usage: /mcmpayment <tebex|craftingstore> <player_uuid> <transaction_id> <amount> <currency> <package_id>");
+        // mcmpayment <tebex|craftingstore> <username> <transaction_id> <amount> <currency>
+        if (args.length != 5) {
+            sender.sendMessage("Usage: /mcmpayment <tebex|craftingstore> <username> <transaction_id> <amount> <currency>");
             return;
         }
 
         final String platform = args[0];
-        final String player_uuid = args[1];
+        final String username = args[1];
         final String transaction_id = args[2];
         String amount = args[3];
         final String currency = args[4];
-        final String package_id = args[5];
 
         // transaction fee option from config
         double amountDouble = Double.parseDouble(amount);
@@ -49,12 +48,13 @@ public class PaymentCommand extends Command {
             amount = String.valueOf(amountDouble);
         }
 
+        // validate platform
         if (!platform.equalsIgnoreCase("tebex") && !platform.equalsIgnoreCase("craftingstore")) {
             sender.sendMessage("Invalid platform. Must be either 'tebex' or 'craftingstore'.");
             return;
         }
 
-        PlayerPayment playerPayment = new PlayerPayment(plugin, platform, player_uuid, transaction_id, amount, currency, package_id);
+        PlayerPayment playerPayment = new PlayerPayment(plugin, platform, username, transaction_id, amount, currency);
 
         // get the payment as a json string
         String jsonString;
@@ -67,7 +67,7 @@ public class PaymentCommand extends Command {
 
         LoggerUtil.debug("Uploading payment session now... " + jsonString);
 
-        HttpUtil.makeAsyncPostRequest("https://dashboard.mcmetrics.net/api/payments/insertPayment", jsonString, HttpUtil.getAuthHeadersFromConfig());
+        HttpUtil.makeAsyncPostRequest("https://dashboard.mcmetrics.net/api/payments/insertUsernamePayment", jsonString, HttpUtil.getAuthHeadersFromConfig());
 
         return;
     }
