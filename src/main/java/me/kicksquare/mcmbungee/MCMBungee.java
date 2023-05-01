@@ -7,6 +7,7 @@ import de.leonhard.storage.internal.settings.ReloadSettings;
 import io.sentry.Sentry;
 import me.kicksquare.mcmbungee.commands.MCMCommand;
 import me.kicksquare.mcmbungee.commands.PaymentCommand;
+import me.kicksquare.mcmbungee.listeners.GlobalBansListener;
 import me.kicksquare.mcmbungee.util.HttpUtil;
 import me.kicksquare.mcmbungee.util.LoggerUtil;
 import me.kicksquare.mcmbungee.util.Metrics;
@@ -22,6 +23,7 @@ public final class MCMBungee extends Plugin {
 
     private Config mainConfig;
     private Config dataConfig;
+    private Config bansConfig;
 
     @Override
     public void onEnable() {
@@ -42,10 +44,19 @@ public final class MCMBungee extends Plugin {
                 .setReloadSettings(ReloadSettings.MANUALLY)
                 .createConfig();
 
+        bansConfig = SimplixBuilder
+                .fromFile(new File(getDataFolder(), "globalbans.yml"))
+                .addInputStreamFromResource("globalbans.yml")
+                .setDataType(DataType.SORTED)
+                .setReloadSettings(ReloadSettings.MANUALLY)
+                .createConfig();
+
         MCMCommand.reloadConfigAndFetchData();
 
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new MCMCommand());
         ProxyServer.getInstance().getPluginManager().registerCommand(this, new PaymentCommand());
+        ProxyServer.getInstance().getPluginManager().registerListener(this, new GlobalBansListener(this, getProxy()));
+
 
         // enable bstats
         if (mainConfig.getBoolean("enable-bstats")) {
@@ -91,5 +102,8 @@ public final class MCMBungee extends Plugin {
     }
     public Config getDataConfig() {
         return dataConfig;
+    }
+    public Config getBansConfig() {
+        return bansConfig;
     }
 }

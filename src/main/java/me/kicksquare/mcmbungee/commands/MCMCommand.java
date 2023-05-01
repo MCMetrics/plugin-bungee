@@ -21,6 +21,8 @@ public class MCMCommand extends Command {
     public static CompletableFuture<Boolean> reloadConfigAndFetchData() {
         return CompletableFuture.supplyAsync(() -> {
             plugin.getMainConfig().forceReload();
+            plugin.getDataConfig().forceReload();
+            plugin.getBansConfig().forceReload();
 
             if (SetupUtil.isSetup()) {
                 TaskList.fetchTasks();
