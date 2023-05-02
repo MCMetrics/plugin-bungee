@@ -4,7 +4,6 @@ import de.leonhard.storage.Config;
 import de.leonhard.storage.SimplixBuilder;
 import de.leonhard.storage.internal.settings.DataType;
 import de.leonhard.storage.internal.settings.ReloadSettings;
-import io.sentry.Sentry;
 import me.kicksquare.mcmbungee.commands.MCMCommand;
 import me.kicksquare.mcmbungee.commands.PaymentCommand;
 import me.kicksquare.mcmbungee.listeners.GlobalBansListener;
@@ -61,18 +60,6 @@ public final class MCMBungee extends Plugin {
         // enable bstats
         if (mainConfig.getBoolean("enable-bstats")) {
             new Metrics(this, 17891);
-        }
-
-        // enable sentry error reporting
-        if (mainConfig.getBoolean("enable-sentry")) {
-            Sentry.init(options -> {
-                options.setDsn("https://d9b2edffd9564e7e89f40663d093567f@o4504532201046017.ingest.sentry.io/4504800584794112");
-                options.setTracesSampleRate(0.1);
-                options.setDebug(false);
-            });
-
-            // checks for exceptions matching this plugin name and uploads them to sentry
-            Thread.setDefaultUncaughtExceptionHandler(new SentryExceptionHandler());
         }
 
         // every 5 minutes, log "hello world" to console
