@@ -11,6 +11,8 @@ import net.md_5.bungee.api.plugin.Command;
 
 import java.util.concurrent.CompletableFuture;
 
+import static me.kicksquare.mcmbungee.util.ColorUtil.colorize;
+
 public class MCMCommand extends Command {
     private static MCMBungee plugin = MCMBungee.getPlugin();
 
@@ -52,7 +54,7 @@ public class MCMCommand extends Command {
                         plugin.uploadPlayerCount(); // manually force upload player count
                         sender.sendMessage(ChatColor.GREEN + "Successfully reloaded the config!");
                         if (plugin.getMainConfig().getBoolean("enable-sentry")) return; // already enabled
-                        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7Optional Sentry Opt-In: Run &9'mcmetrics enablesentry'&7 to enable anonymous error-reporting via Sentry (you can change this later in the config)."));
+                        sender.sendMessage(colorize( "&7Optional Sentry Opt-In: Run &9'mcmetrics enablesentry'&7 to enable anonymous error-reporting via Sentry (you can change this later in the config)."));
 
                     } else {
                         sender.sendMessage(ChatColor.RED + "Failed to reload the config!");
@@ -92,12 +94,25 @@ public class MCMCommand extends Command {
                 sender.sendMessage(ChatColor.GREEN + "Successfully configured the plugin!");
                 return;
             }
+        } else if (args.length >= 1 && args[0].equalsIgnoreCase("bans")) {
+            if (!plugin.getBansConfig().getBoolean("enabled")) {
+                sender.sendMessage(colorize("&c&lMCMetrics &r&7Global Bans is not enabled!"));
+                return;
+            }
+
+            // returns false if the help message needs to be shown
+            if (BansExecutor.executeBansSubcommand(sender, args)) return;
         }
 
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&e&lMCMetrics"));
+        sender.sendMessage(colorize( "&e&lMCMetrics"));
         sender.sendMessage(ChatColor.GRAY + "Plugin Commands:");
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7 • &9/mcmetrics reload&7 - Reloads the config"));
-        sender.sendMessage(ChatColor.translateAlternateColorCodes('&', "&7 • &9/mcmetrics setup <user id> <server id>&7 - Automatically configures the plugin"));
+        sender.sendMessage(colorize( "&7 • &9/mcmetrics reload&7 - Reloads the config"));
+        sender.sendMessage(colorize( "&7 • &9/mcmetrics setup <user id> <server id>&7 - Automatically configures the plugin"));
+        if (plugin.getBansConfig().getBoolean("enabled")) {
+            sender.sendMessage(colorize("&7Global Bans Commands:"));
+            sender.sendMessage(colorize("&7 • &b/mcmetrics bans add <player name/uuid> <reason> <evidence> &7- Bans a player using MCMetrics Global Bans"));
+            sender.sendMessage(colorize("&7 • &b/mcmetrics bans lookup <player name/uuid> &7- Check a player for MCMetrics Global Bans flags"));
+        }
 
     }
 }
