@@ -2,6 +2,7 @@ package me.kicksquare.mcmbungee.commands;
 
 import me.kicksquare.mcmbungee.MCMBungee;
 import me.kicksquare.mcmbungee.types.TaskList;
+import me.kicksquare.mcmbungee.util.ConfigUtil;
 import me.kicksquare.mcmbungee.util.HttpUtil;
 import me.kicksquare.mcmbungee.util.SetupUtil;
 import net.md_5.bungee.api.ChatColor;
@@ -22,6 +23,8 @@ public class MCMCommand extends Command {
 
     public static CompletableFuture<Boolean> reloadConfigAndFetchData() {
         return CompletableFuture.supplyAsync(() -> {
+            ConfigUtil.setConfigDefaults(plugin.getMainConfig(), plugin.getDataConfig(), plugin.getBansConfig());
+
             plugin.getMainConfig().forceReload();
             plugin.getDataConfig().forceReload();
             plugin.getBansConfig().forceReload();

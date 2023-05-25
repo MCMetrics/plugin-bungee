@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.kicksquare</groupId>
-    <artifactId>mcm-bungee</artifactId>
+    <artifactId>MCMetrics-Spigot</artifactId>
     <version>1.2.1</version>
     <packaging>jar</packaging>
 
