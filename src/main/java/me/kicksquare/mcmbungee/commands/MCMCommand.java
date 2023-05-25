@@ -15,7 +15,7 @@ import java.util.concurrent.CompletableFuture;
 import static me.kicksquare.mcmbungee.util.ColorUtil.colorize;
 
 public class MCMCommand extends Command {
-    private static MCMBungee plugin = MCMBungee.getPlugin();
+    private static final MCMBungee plugin = MCMBungee.getPlugin();
 
     public MCMCommand() {
         super("mcmetrics", "mcmetrics.command", "mcm", "/mcmetrics", "/mcm");
@@ -100,10 +100,10 @@ public class MCMCommand extends Command {
             if (BansExecutor.executeBansSubcommand(sender, args)) return;
         }
 
-        sender.sendMessage(colorize( "&e&lMCMetrics"));
+        sender.sendMessage(colorize("&e&lMCMetrics"));
         sender.sendMessage(ChatColor.GRAY + "Plugin Commands:");
-        sender.sendMessage(colorize( "&7 • &9/mcmetrics reload&7 - Reloads the config"));
-        sender.sendMessage(colorize( "&7 • &9/mcmetrics setup <user id> <server id>&7 - Automatically configures the plugin"));
+        sender.sendMessage(colorize("&7 • &9/mcmetrics reload&7 - Reloads the config"));
+        sender.sendMessage(colorize("&7 • &9/mcmetrics setup <user id> <server id>&7 - Automatically configures the plugin"));
         if (plugin.getBansConfig().getBoolean("enabled")) {
             sender.sendMessage(colorize("&7Global Bans Commands:"));
             sender.sendMessage(colorize("&7 • &b/mcmetrics bans add <player name/uuid> <reason> <evidence> &7- Bans a player using MCMetrics Global Bans"));

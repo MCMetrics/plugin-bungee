@@ -8,7 +8,7 @@ import me.kicksquare.mcmbungee.util.HttpUtil;
 import me.kicksquare.mcmbungee.util.LoggerUtil;
 
 public class TaskList {
-    private static MCMBungee plugin = MCMBungee.getPlugin();
+    private static final MCMBungee plugin = MCMBungee.getPlugin();
 
     @JsonProperty("recordSessions")
     public boolean recordSessions;

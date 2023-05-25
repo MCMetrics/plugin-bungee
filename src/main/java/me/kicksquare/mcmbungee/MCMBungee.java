@@ -63,14 +63,12 @@ public final class MCMBungee extends Plugin {
         }
 
         // every 5 minutes, log "hello world" to console
-        getProxy().getScheduler().schedule(this, () -> {
-            uploadPlayerCount();
-        }, 0, dataConfig.getInt("ping-interval"), java.util.concurrent.TimeUnit.MINUTES);
+        getProxy().getScheduler().schedule(this, this::uploadPlayerCount, 0, dataConfig.getInt("ping-interval"), java.util.concurrent.TimeUnit.MINUTES);
     }
 
     public void uploadPlayerCount() {
         if (!SetupUtil.shouldRecordPings()) return;
-        if(dataConfig.getInt("ping-interval") == 0) return;
+        if (dataConfig.getInt("ping-interval") == 0) return;
 
         try {
             LoggerUtil.debug("Sending playercount ping");
@@ -84,12 +82,15 @@ public final class MCMBungee extends Plugin {
     public static MCMBungee getPlugin() {
         return plugin;
     }
+
     public Config getMainConfig() {
         return mainConfig;
     }
+
     public Config getDataConfig() {
         return dataConfig;
     }
+
     public Config getBansConfig() {
         return bansConfig;
     }

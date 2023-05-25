@@ -9,7 +9,7 @@ import java.util.concurrent.CompletableFuture;
 public class HttpUtil {
 
     private static final OkHttpClient client = new OkHttpClient();
-    private static MCMBungee plugin = MCMBungee.getPlugin();
+    private static final MCMBungee plugin = MCMBungee.getPlugin();
 
     /**
      * @param url        The URL to send the request to

@@ -69,6 +69,5 @@ public class PaymentCommand extends Command {
 
         HttpUtil.makeAsyncPostRequest("https://dashboard.mcmetrics.net/api/payments/insertUsernamePayment", jsonString, HttpUtil.getAuthHeadersFromConfig());
 
-        return;
     }
 }

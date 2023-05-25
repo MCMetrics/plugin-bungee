@@ -5,10 +5,10 @@ import me.kicksquare.mcmbungee.MCMBungee;
 
 public class SetupUtil {
 
-    private static MCMBungee plugin = MCMBungee.getPlugin();
-    private static Config config = plugin.getMainConfig();
-    private static Config dataConfig = plugin.getDataConfig();
-    private static Config bansConfig = plugin.getBansConfig();
+    private static final MCMBungee plugin = MCMBungee.getPlugin();
+    private static final Config config = plugin.getMainConfig();
+    private static final Config dataConfig = plugin.getDataConfig();
+    private static final Config bansConfig = plugin.getBansConfig();
 
     public static boolean isSetup() {
         return dataConfig.getBoolean("setup-complete") &&
